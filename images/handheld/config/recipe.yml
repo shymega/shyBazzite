@@ -1,0 +1,44 @@
+name: shybazzite
+alt-tags: [ handheld ]
+description: This is my personal OS image for my handheld gaming devices.
+base-image: ghcr.io/ublue-os/bazzite-deck
+image-version: stable
+modules:
+  - type: files
+    files:
+      - ../../../common/files/usr: /usr
+      - ../../../common/files/etc: /etc
+  - type: containerfile
+    containerfiles:
+      - zfs
+  - type: rpm-ostree
+    repos:
+      - https://pkgs.tailscale.com/stable/fedora/tailscale.repo
+    install:
+      - code
+      - zerotier-one
+      - tailscale
+      - firefox
+  - type: default-flatpaks
+    system:
+      remove:
+        - org.gnome.eog
+  - type: bling
+    install:
+      - ublue-update
+      - 1password
+      - dconf-update-service
+  - type: fonts
+    fonts:
+      nerd-fonts:
+        - FiraCode
+        - CascadiaCode
+        - Hack
+        - SourceCodePro
+        - Terminus
+        - JetBrainsMono
+        - NerdFontsSymbolsOnly
+      google-fonts:
+        - Roboto
+        - Open Sans
+  - type: signing

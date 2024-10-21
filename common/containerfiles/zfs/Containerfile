@@ -1,0 +1,6 @@
+# Kudos! https://github.com/nhubaotruong/nhubaotruong-ublue/blob/bb53312f28f54c7a75a54349394937065e7c4cc1/containerfiles/zfs-rpms/Containerfile
+
+RUN --mount=type=bind,from=ghcr.io/ublue-os/akmods-zfs:coreos-stable-40,source=/rpms,target=/tmp/akmods-zfs \
+    rpm-ostree cliwrap install-to-root / && \
+    rpm-ostree install pv /tmp/akmods-zfs/kmods/zfs/*.rpm && \
+    ostree container commit
