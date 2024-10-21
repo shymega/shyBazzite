@@ -28,7 +28,7 @@ jobs:
       - name: Maximize build space
         uses: ublue-os/remove-unwanted-software@v7
       - name: Build Custom Image
-        uses: blue-build/github-action@v1.6.1
+        uses: blue-build/github-action@v1.6.2
         with:
           recipe: ./config/recipe.yml
           cosign_private_key: ${{ secrets.SIGNING_SECRET }}
