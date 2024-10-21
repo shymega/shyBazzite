@@ -12,12 +12,12 @@ concurrency:
 
 jobs:
   build-and-push:
-    name: Build and push custom Bazzite image
+    name: Build and push custom Bazzite image for ${{ matrix.target }}
     runs-on: ubuntu-latest
     strategy:
-      fail-fast: true
+      fail-fast: false
       matrix:
-        target: 
+        target:
           - "desktop"
           - "handheld"
     permissions:
@@ -25,26 +25,23 @@ jobs:
       packages: write
       id-token: write
     steps:
-      - name: Maximize build space
-        uses: ublue-os/remove-unwanted-software@v7
       - name: Build Custom Image
         uses: blue-build/github-action@v1.6.2
         with:
-          recipe: ./config/recipe.yml
           cosign_private_key: ${{ secrets.SIGNING_SECRET }}
           registry_username: ${{ github.repository_owner }}
           registry_token: ${{ secrets.GITHUB_TOKEN }}
           working_directory: ./images/${{ matrix.target }}
   build-iso:
-    name: Build and upload custom Bazzite ISO
+    name: Build and upload custom Bazzite ISO to R2 (private) ${{ matrix.target }}
     needs: [build-and-push]
     strategy:
-      fail-fast: true
+      fail-fast: false
       matrix:
         target:
           - "desktop"
           - "handheld"
-    if: (github.event_name == 'schedule' && needs.build-and-push.result == 'success') || (github.event_name == 'workflow_dispatch' && needs.build-and-push.result == 'success')
+    if: ${{ (github.event_name == 'schedule' && needs.build-and-push.result == 'success') || (github.event_name == 'workflow_dispatch' && needs.build-and-push.result == 'success') }}
     runs-on:  ubuntu-latest
     permissions:
       contents: read
@@ -63,7 +60,7 @@ jobs:
           image_name: shybazzite
           image_repo: ghcr.io/shymega
           version: 40
-          image_tag: ${{ matrix.target }}
+          image_tag: ${{ matrix.target }}-40
           secure_boot_key_url: 'https://github.com/ublue-os/bazzite/raw/main/secure_boot.der'
           enrollment_password: 'universalblue'
           iso_name: shybazzite-${{ matrix.target }}.iso

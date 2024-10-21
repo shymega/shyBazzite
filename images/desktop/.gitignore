@@ -1,0 +1,4 @@
+cosign.private
+cosign.key
+/Containerfile
+/Containerfile.*
