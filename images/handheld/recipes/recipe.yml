@@ -5,6 +5,10 @@ base-image: ghcr.io/ublue-os/bazzite-deck
 image-version: 40
 modules:
   - from-file: ../../../common/common-zfs.yml
+  - type: files
+    files:
+      - source: files
+        destination: /
   - type: default-flatpaks
     system:
       remove:
