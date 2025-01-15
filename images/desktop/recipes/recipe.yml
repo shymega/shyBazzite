@@ -2,7 +2,7 @@ name: shybazzite
 alt-tags: [ desktop ]
 description: This is my personal OS image for my gaming workstation
 base-image: ghcr.io/ublue-os/bazzite
-image-version: 40
+image-version: stable-41
 modules:
   - from-file: ../../../common/common-zfs.yml
   - type: files

@@ -2,7 +2,7 @@ name: shybazzite
 alt-tags: [ handheld ]
 description: This is my personal OS image for my handheld gaming devices.
 base-image: ghcr.io/ublue-os/bazzite-deck
-image-version: 40
+image-version: stable-41
 modules:
   - from-file: ../../../common/common-zfs.yml
   - type: files
