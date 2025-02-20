@@ -1,6 +1,16 @@
 # Kudos! https://github.com/nhubaotruong/nhubaotruong-ublue/blob/bb53312f28f54c7a75a54349394937065e7c4cc1/containerfiles/zfs-rpms/Containerfile
 
-RUN --mount=type=bind,from=ghcr.io/ublue-os/akmods-zfs:coreos-testing-41,source=/rpms,target=/tmp/akmods-zfs \
-    && rpm-ostree override remove zfs-fuse --install /tmp/akmods-zfs/kmods/zfs/zfs-2.2.7-1.fc41.x86_64.rpm \
-    && rpm-ostree install /tmp/akmods-zfs/kmods/*.rpm \
+ENV ZFS_RPMS_SRC_DIR=/tmp/akmods-zfs/kmods/zfs
+
+RUN --mount=type=bind,from=ghcr.io/ublue-os/akmods-zfs:coreos-stable-41,source=/rpms,target=/tmp/akmods-zfs \
+    rpm-ostree install \
+        ${ZFS_RPMS_SRC_DIR}/kmod-zfs-*.rpm \
+        ${ZFS_RPMS_SRC_DIR}/libnvpair3-*.rpm \
+        ${ZFS_RPMS_SRC_DIR}/libuutil3-*.rpm \
+        ${ZFS_RPMS_SRC_DIR}/libzfs5-*.rpm \
+        ${ZFS_RPMS_SRC_DIR}/libzpool5-*.rpm \
+        ${ZFS_RPMS_SRC_DIR}/python3-pyzfs-*.rpm \
+        ${ZFS_RPMS_SRC_DIR}/zfs-*.rpm \
+    && depmod -a \
+    && echo "zfs" | tee /usr/lib/modules-load.d/zfs.conf \
     && ostree container commit
