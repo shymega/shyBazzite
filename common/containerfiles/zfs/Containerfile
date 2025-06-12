@@ -1,16 +1,8 @@
 # Kudos! https://github.com/nhubaotruong/nhubaotruong-ublue/blob/bb53312f28f54c7a75a54349394937065e7c4cc1/containerfiles/zfs-rpms/Containerfile
 
-ENV ZFS_RPMS_SRC_DIR=/tmp/akmods-zfs/kmods/zfs
-
 RUN --mount=type=bind,from=ghcr.io/ublue-os/akmods-zfs:coreos-stable-41,source=/rpms,target=/tmp/akmods-zfs \
-    rpm-ostree install \
-        ${ZFS_RPMS_SRC_DIR}/kmod-zfs-*.rpm \
-        ${ZFS_RPMS_SRC_DIR}/libnvpair3-*.rpm \
-        ${ZFS_RPMS_SRC_DIR}/libuutil3-*.rpm \
-        ${ZFS_RPMS_SRC_DIR}/libzfs5-*.rpm \
-        ${ZFS_RPMS_SRC_DIR}/libzpool5-*.rpm \
-        ${ZFS_RPMS_SRC_DIR}/python3-pyzfs-*.rpm \
-        ${ZFS_RPMS_SRC_DIR}/zfs-*.rpm \
-    && depmod -a \
+    rpm-ostree cliwrap install-to-root / && \
+    rpm-ostree install pv /tmp/akmods-zfs/kmods/zfs/*.rpm && \
+    ostree container commit \
     && echo "zfs" | tee /usr/lib/modules-load.d/zfs.conf \
     && ostree container commit
