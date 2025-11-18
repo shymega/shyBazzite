@@ -1,6 +1,5 @@
 ---
 name: shybazzite
-# description will be included in the image's metadata
 description: This is my personal OS image for gaming.
 
 base-image: ghcr.io/ublue-os/bazzite
@@ -12,6 +11,10 @@ modules:
       - source: system
         destination: /
 
+  - type: script
+    scripts:
+      - zfs_install.sh
+
   - type: dnf
     repos:
       copr:
@@ -20,18 +23,13 @@ modules:
       packages:
         - micro
         - starship
-    remove:
-      packages:
-        - firefox
-        - firefox-langpacks
+        - atuin
 
   - type: default-flatpaks
     configurations:
       - notify: true
-        scope: system
+        scope: user
         install: 
-          - org.mozilla.firefox
           - com.valvesoftware.Steam
-      - scope: user
 
   - type: signing
