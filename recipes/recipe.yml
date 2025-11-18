@@ -2,7 +2,7 @@
 name: shybazzite
 description: This is my personal OS image for gaming.
 
-base-image: ghcr.io/ublue-os/bazzite
+base-image: ghcr.io/ublue-os/bazzite-deck
 image-version: stable-43 
 
 modules:
