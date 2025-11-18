@@ -8,7 +8,7 @@ RELEASE="$(rpm -E %fedora)"
 
 # dnf install -y https://zfsonlinux.org/fedora/zfs-release-3-0$(rpm --eval "%{dist}").noarch.rpm
 dnf install -y kernel-devel-"$(rpm -qa kernel --queryformat '%{VERSION}-%{RELEASE}.%{ARCH}')"
-dnf install -y /opt/zfs-kmod-debugsource-2.4.99-224_g74b50a71a.fc43.x86_64.rpm
+dnf install -y /var/opt/zfs-kmod-debugsource-2.4.99-224_g74b50a71a.fc43.x86_64.rpm
 # dnf install -y zfs
 
 ## Auto-load ZFS module
