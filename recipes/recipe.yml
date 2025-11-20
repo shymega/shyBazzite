@@ -10,11 +10,9 @@ modules:
     files:
       - source: system
         destination: /
-
   - type: script
     scripts:
       - zfs_install.sh
-
   - type: dnf
     repos:
       copr:
@@ -24,12 +22,49 @@ modules:
         - micro
         - starship
         - atuin
-
-  - type: default-flatpaks
-    configurations:
-      - notify: true
-        scope: user
-        install: 
-          - com.valvesoftware.Steam
-
+  - type: bling
+    install:
+        - 1password
+  - type: rpm-ostree
+    repos: 
+      - https://download.docker.com/linux/fedora/docker-ce.repo
+      - https://pkgs.tailscale.com/stable/fedora/tailscale.repo
+    install:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-buildx-plugin
+      - docker-compose-plugin
+      - gnome-boxes
+      - virt-manager
+      - tailscale
+      - bat
+      - restic
+      - duf
+      - fd-find
+      - fuzzel
+      - htop
+      - httpie
+      - iftop
+      - konsole
+      - neovim
+      - pwgen
+      - python3-neovim
+      - ripgrep
+      - syncthing
+      - thefuck
+      - tldr
+  - type: fonts
+    fonts:
+      nerd-fonts:
+        - FiraCode
+        - CascadiaCode
+        - Hack
+        - SourceCodePro
+        - Terminus
+        - JetBrainsMono
+        - NerdFontsSymbolsOnly
+      google-fonts:
+        - Roboto
+        - Open Sans
   - type: signing
