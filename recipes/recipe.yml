@@ -13,6 +13,7 @@ modules:
   - type: script
     scripts:
       - zfs_install.sh
+      - _1password_install.sh
   - type: dnf
     repos:
       copr:
@@ -22,9 +23,6 @@ modules:
         - micro
         - starship
         - atuin
-  - type: bling
-    install:
-        - 1password
   - type: rpm-ostree
     repos: 
       - https://download.docker.com/linux/fedora/docker-ce.repo
